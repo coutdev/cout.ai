@@ -8,6 +8,8 @@
 - Profile page
 - Admin portal
 - Admin new account approval system
+- Light/dark modes
+- Theme color picker 
 
 
 # Project Setup
