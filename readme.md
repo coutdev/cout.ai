@@ -1,3 +1,15 @@
+# Project Features
+- Login page
+- Create account page
+- Forgot password page
+- Generic home page
+- Working ChatGPT API
+- Saved chat sessions in side bar
+- Profile page
+- Admin portal
+- Admin new account approval system
+
+
 # Project Setup
 
 ## In the CMD, navigate to the folder you want to create the project
