@@ -87,17 +87,6 @@ backend/
 
 ---
 
-## 📚 Documentation Structure (`docs/`)
-
-```
-docs/
-├── 📄 README.md                    # Documentation overview
-├── 📄 FEATURES.md                  # Complete feature documentation
-├── 📄 ARCHITECTURE.md              # System architecture guide
-├── 📄 MULTIPLE_CHAT_SESSIONS.md    # Chat system documentation
-└── 📄 CHANGELOG.md                 # Development history
-```
-
 ---
 
 ## 🎯 Key Features by Directory
