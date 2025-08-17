@@ -14,6 +14,11 @@
 
 # Project Setup
 
+## Prerequisites
+- Python 3.8 or higher
+- OpenAI API key
+- Supabase project credentials
+
 ## In the CMD, navigate to the folder you want to create the project
 For my example, my folder path is "C:\Users\Coots\CodingProjects\AI"  
 cd C:\Users\Coots\CodingProjects\AI
@@ -47,11 +52,6 @@ npm run dev
 ---
 
 # Backend Setup
-
-## Prerequisites
-- Python 3.8 or higher
-- OpenAI API key
-- Supabase project credentials
 
 ## Update .env.example
 Open the file "env.example" and Input your OpenAI API key and Supabase keys. Save file  
