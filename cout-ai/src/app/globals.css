@@ -1,0 +1,955 @@
+/* Import Tailwind's base, component, and utility styles */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Import modern font stack with multiple weights */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Source+Sans+3:wght@300;400;500;600;700&display=swap');
+
+/* Import highlight.js themes for syntax highlighting */
+@import 'highlight.js/styles/atom-one-dark.css' (prefers-color-scheme: dark);
+@import 'highlight.js/styles/atom-one-light.css' (prefers-color-scheme: light);
+
+@layer base {
+	/* Enhanced root variables for consistent theming */
+	:root {
+		--color-background: 255 255 255;
+		--color-foreground: 15 23 42;
+		--color-surface: 248 250 252;
+		--color-surface-hover: 241 245 249;
+		--color-border: 226 232 240;
+		--color-border-hover: 203 213 225;
+		--color-accent: 99 102 241;
+		--color-accent-foreground: 255 255 255;
+		--shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+		--shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+		--shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+		--shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+		
+		/* Dynamic accent color variables (set by ColorContext) */
+		--color-accent-50: 238 242 255;
+		--color-accent-100: 224 231 255;
+		--color-accent-200: 199 210 254;
+		--color-accent-300: 165 180 252;
+		--color-accent-400: 129 140 248;
+		--color-accent-500: 99 102 241;
+		--color-accent-600: 79 70 229;
+		--color-accent-700: 67 56 202;
+		--color-accent-800: 55 48 163;
+		--color-accent-900: 49 46 129;
+		--color-accent-950: 30 27 75;
+		--color-accent-secondary-500: 168 85 247;
+		--color-accent-secondary-600: 147 51 234;
+		--color-accent-secondary-700: 126 58 237;
+	}
+
+	.dark {
+		--color-background: 2 6 23;
+		--color-foreground: 248 250 252;
+		--color-surface: 15 23 42;
+		--color-surface-hover: 30 41 59;
+		--color-border: 51 65 85;
+		--color-border-hover: 71 85 105;
+		--color-accent: 129 140 248;
+		--color-accent-foreground: 15 23 42;
+		--shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+		--shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+		--shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.4);
+		--shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.4), 0 8px 10px -6px rgb(0 0 0 / 0.4);
+	}
+
+	html {
+		font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+		font-feature-settings: 'cv11', 'ss01';
+		font-variation-settings: 'opsz' 32;
+		scroll-behavior: smooth;
+		/* Fix iOS viewport height issues */
+		height: 100%;
+		height: -webkit-fill-available;
+	}
+
+	body {
+		@apply bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100;
+		@apply antialiased leading-relaxed;
+		background-image: 
+			radial-gradient(at 40% 20%, rgb(var(--color-accent-500) / 0.08) 0px, transparent 60%),
+			radial-gradient(at 80% 0%, rgb(var(--color-accent-secondary-500) / 0.05) 0px, transparent 60%);
+		/* Fix iOS viewport height issues */
+		min-height: 100vh;
+		min-height: -webkit-fill-available;
+		/* Prevent horizontal scroll on mobile */
+		overflow-x: hidden;
+		/* Prevent zoom on input focus (iOS) */
+		-webkit-text-size-adjust: 100%;
+		-ms-text-size-adjust: 100%;
+	}
+
+	* {
+		border-color: rgb(var(--color-border));
+		/* Improve touch targets on mobile */
+		-webkit-tap-highlight-color: transparent;
+		/* Prevent text selection issues on mobile */
+		-webkit-touch-callout: none;
+	}
+
+	/* Fix iOS input zoom */
+	input, textarea, select {
+		font-size: 16px !important;
+	}
+
+	@media (max-width: 768px) {
+		html {
+			font-size: 14px;
+		}
+		
+		input, textarea, select {
+			font-size: 16px !important;
+		}
+	}
+}
+
+@layer components {
+	/* Enhanced Button Components */
+	.btn-primary {
+		@apply relative inline-flex items-center justify-center;
+		@apply px-6 py-3 text-sm font-semibold text-white;
+		background: linear-gradient(to right, rgb(var(--color-accent-600)), rgb(var(--color-accent-secondary-600)), rgb(var(--color-accent-700)));
+		@apply hover:shadow-xl;
+		@apply rounded-xl shadow-lg;
+		@apply transform transition-all duration-200 ease-out;
+		@apply hover:scale-[1.02] active:scale-[0.98];
+		@apply disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none;
+		@apply before:absolute before:inset-0 before:rounded-xl;
+		@apply before:bg-gradient-to-r before:from-white/20 before:to-transparent;
+		@apply before:opacity-0 hover:before:opacity-100 before:transition-opacity;
+		@apply focus:outline-none focus:ring-2 focus:ring-offset-2;
+		@apply dark:focus:ring-offset-slate-900;
+		box-shadow: 0 0 0 2px rgb(var(--color-accent-500) / 0.5);
+	}
+
+	.btn-primary:hover {
+		background: linear-gradient(to right, rgb(var(--color-accent-700)), rgb(var(--color-accent-secondary-700)), rgb(var(--color-accent-800)));
+	}
+
+	.btn-primary:focus {
+		background: linear-gradient(to right, rgb(var(--color-accent-700)), rgb(var(--color-accent-secondary-700)), rgb(var(--color-accent-800)));
+		box-shadow: 0 0 0 2px rgb(var(--color-accent-500) / 0.5);
+	}
+
+	.btn-secondary {
+		@apply relative inline-flex items-center justify-center;
+		@apply px-6 py-3 text-sm font-semibold;
+		@apply text-slate-700 dark:text-slate-200;
+		@apply bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm;
+		@apply border border-slate-200 dark:border-slate-700;
+		@apply hover:bg-white dark:hover:bg-slate-800;
+		@apply hover:border-slate-300 dark:hover:border-slate-600;
+		@apply rounded-xl shadow-sm hover:shadow-md;
+		@apply transform transition-all duration-200 ease-out;
+		@apply hover:scale-[1.02] active:scale-[0.98];
+		@apply focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:ring-offset-2;
+		@apply dark:focus:ring-offset-slate-900;
+	}
+
+	.btn-ghost {
+		@apply inline-flex items-center justify-center;
+		@apply px-4 py-2 text-sm font-medium;
+		@apply text-slate-600 dark:text-slate-400;
+		@apply hover:text-slate-900 dark:hover:text-slate-100;
+		@apply hover:bg-slate-100 dark:hover:bg-slate-800;
+		@apply rounded-lg transition-all duration-150 ease-out;
+		@apply focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:ring-offset-1;
+	}
+
+	/* Enhanced Input Components */
+	.input-field {
+		@apply w-full px-4 py-3 text-sm;
+		@apply bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm;
+		@apply border border-slate-200 dark:border-slate-700;
+		@apply rounded-xl shadow-sm;
+		@apply text-slate-900 dark:text-slate-100;
+		@apply placeholder-slate-400 dark:placeholder-slate-500;
+		@apply transition-all duration-200 ease-out;
+		@apply focus:outline-none focus:ring-2 focus:ring-offset-0;
+		@apply hover:border-slate-300 dark:hover:border-slate-600;
+		font-family: 'Source Sans 3', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+		font-weight: 400;
+		line-height: 1.6;
+		letter-spacing: 0.01em;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		focus-ring-color: rgb(var(--color-accent-500) / 0.5);
+		border-color: rgb(var(--color-accent-300));
+	}
+
+	.input-field:focus {
+		border-color: rgb(var(--color-accent-300));
+		box-shadow: 0 0 0 2px rgb(var(--color-accent-500) / 0.5);
+	}
+
+	.input-field:dark:focus {
+		border-color: rgb(var(--color-accent-600));
+	}
+
+	/* Enhanced Card Components */
+	.card {
+		@apply bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm;
+		@apply border border-slate-200/50 dark:border-slate-700/50;
+		@apply rounded-2xl shadow-lg;
+		@apply transition-all duration-200 ease-out;
+	}
+
+	.card-hover {
+		@apply card hover:shadow-xl hover:border-slate-300 dark:hover:border-slate-600;
+		@apply hover:scale-[1.01] transform;
+	}
+
+	.card-interactive {
+		@apply card-hover cursor-pointer;
+		@apply hover:bg-white dark:hover:bg-slate-800;
+		@apply active:scale-[0.99];
+	}
+
+	/* Enhanced Gradient Backgrounds */
+	.gradient-bg {
+		background: linear-gradient(to bottom right, rgb(var(--color-accent-600)), rgb(var(--color-accent-secondary-600)), rgb(var(--color-accent-700)));
+	}
+
+	.gradient-bg-subtle {
+		@apply bg-gradient-to-br from-slate-50 to-slate-100;
+		background-image: 
+			radial-gradient(at 50% 0%, rgb(var(--color-accent-500) / 0.05) 0px, transparent 70%),
+			radial-gradient(at 100% 100%, rgb(var(--color-accent-secondary-500) / 0.03) 0px, transparent 70%);
+	}
+
+	.dark .gradient-bg-subtle {
+		@apply bg-gradient-to-br from-slate-900 to-slate-950;
+		background-image: 
+			radial-gradient(at 50% 0%, rgb(var(--color-accent-500) / 0.08) 0px, transparent 70%),
+			radial-gradient(at 100% 100%, rgb(var(--color-accent-secondary-500) / 0.05) 0px, transparent 70%);
+	}
+
+	/* Chat Message Styling */
+	.message-user {
+		background: linear-gradient(to bottom right, rgb(var(--color-accent-600)), rgb(var(--color-accent-secondary-600)), rgb(var(--color-accent-700)));
+		@apply text-white;
+		@apply rounded-2xl rounded-br-md shadow-md;
+		@apply relative before:absolute before:inset-0 before:rounded-2xl before:rounded-br-md;
+		@apply before:bg-gradient-to-br before:from-white/20 before:to-transparent before:opacity-0;
+	}
+
+	.message-assistant {
+		@apply bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm;
+		@apply text-slate-900 dark:text-slate-100;
+		@apply border border-slate-200/50 dark:border-slate-700/50;
+		@apply rounded-2xl rounded-bl-md shadow-md;
+	}
+
+	/* Enhanced Chat Message Typography */
+	.chat-message-text {
+		font-family: 'Source Sans 3', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+		@apply text-base leading-relaxed whitespace-pre-wrap;
+		font-weight: 400;
+		line-height: 1.7;
+		letter-spacing: 0.01em;
+		font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
+		text-rendering: optimizeLegibility;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+	}
+
+	.message-user .chat-message-text {
+		@apply text-white;
+		font-weight: 450;
+		text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+	}
+
+	.message-assistant .chat-message-text {
+		@apply text-slate-800 dark:text-slate-100;
+		font-weight: 400;
+	}
+
+	/* Code blocks within chat messages */
+	.chat-message-text code {
+		font-family: 'JetBrains Mono', 'Fira Code', 'Monaco', 'Cascadia Code', 'Roboto Mono', monospace;
+		@apply text-sm bg-slate-100 dark:bg-slate-700/50 px-1.5 py-0.5 rounded;
+		font-weight: 500;
+	}
+
+	.message-user .chat-message-text code {
+		@apply bg-white/20 text-white;
+	}
+
+	/* Pre-formatted text blocks */
+	.chat-message-text pre {
+		font-family: 'JetBrains Mono', 'Fira Code', 'Monaco', 'Cascadia Code', 'Roboto Mono', monospace;
+		@apply text-sm bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl border border-slate-200/50 dark:border-slate-700/50 mt-3 mb-3 overflow-x-auto;
+		line-height: 1.5;
+	}
+
+	.message-user .chat-message-text pre {
+		@apply bg-white/10 border-white/20 text-white;
+	}
+
+	/* Chat message timestamps */
+	.chat-timestamp {
+		font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+		@apply text-xs font-medium;
+		letter-spacing: 0.025em;
+		font-feature-settings: 'tnum' 1;
+	}
+
+	.message-user .chat-timestamp {
+		@apply text-white/80;
+	}
+
+	.message-assistant .chat-timestamp {
+		@apply text-slate-500 dark:text-slate-400;
+	}
+
+	/* Enhanced Sidebar Styling */
+	.sidebar {
+		@apply bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl;
+		@apply border-r border-slate-200/50 dark:border-slate-700/50;
+		@apply shadow-xl;
+	}
+
+	.sidebar-item {
+		@apply relative;
+		@apply p-3 rounded-xl transition-all duration-200 ease-out;
+		@apply hover:bg-slate-50 dark:hover:bg-slate-800/50;
+		@apply focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:ring-offset-2;
+		@apply dark:focus:ring-offset-slate-900;
+	}
+
+	.sidebar-item-active {
+		background: linear-gradient(to right, rgb(var(--color-accent-50)), rgb(var(--color-accent-secondary-50) / 0.5));
+		border-color: rgb(var(--color-accent-200));
+		@apply border shadow-sm;
+	}
+
+	.dark .sidebar-item-active {
+		background: linear-gradient(to right, rgb(var(--color-accent-950) / 0.5), rgb(var(--color-accent-secondary-950) / 0.3));
+		border-color: rgb(var(--color-accent-800));
+	}
+
+	/* Loading States */
+	.loading-shimmer {
+		@apply animate-pulse bg-gradient-to-r from-slate-200 via-slate-50 to-slate-200;
+		@apply dark:from-slate-700 dark:via-slate-800 dark:to-slate-700;
+		background-size: 200% 100%;
+		animation: shimmer 1.5s infinite;
+	}
+
+	@keyframes shimmer {
+		0% { background-position: -200% 0; }
+		100% { background-position: 200% 0; }
+	}
+
+	/* Glass Effect */
+	.glass {
+		@apply bg-white/20 dark:bg-slate-900/20 backdrop-blur-md;
+		@apply border border-white/20 dark:border-slate-700/20;
+	}
+
+	/* Enhanced Scrollbar */
+	.scrollbar-none {
+		scrollbar-width: none;
+		-ms-overflow-style: none;
+	}
+	
+	.scrollbar-none::-webkit-scrollbar {
+		display: none;
+	}
+}
+
+/* Enhanced Custom Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+	width: 6px;
+	height: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+	@apply bg-transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+	background: linear-gradient(to bottom, rgb(var(--color-accent-400) / 0.3), rgb(var(--color-accent-500) / 0.5));
+	@apply rounded-full border-2 border-transparent;
+	@apply transition-all duration-200;
+	background-clip: padding-box;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+	background: linear-gradient(to bottom, rgb(var(--color-accent-500) / 0.6), rgb(var(--color-accent-600) / 0.8));
+}
+
+.custom-scrollbar::-webkit-scrollbar-corner {
+	@apply bg-transparent;
+}
+
+/* Modern scrollbar for Firefox */
+.custom-scrollbar {
+	scrollbar-width: thin;
+	scrollbar-color: rgb(var(--color-accent-400) / 0.5) transparent;
+}
+
+/* Apply custom scrollbar globally to prevent any default ones */
+* {
+	scrollbar-width: thin;
+	scrollbar-color: rgb(var(--color-accent-400) / 0.3) transparent;
+}
+
+*::-webkit-scrollbar {
+	width: 6px;
+	height: 6px;
+}
+
+*::-webkit-scrollbar-track {
+	@apply bg-transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+	background: linear-gradient(to bottom, rgb(var(--color-accent-400) / 0.2), rgb(var(--color-accent-500) / 0.3));
+	@apply rounded-full border-2 border-transparent;
+	@apply transition-all duration-200;
+	background-clip: padding-box;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+	background: linear-gradient(to bottom, rgb(var(--color-accent-500) / 0.4), rgb(var(--color-accent-600) / 0.6));
+}
+
+*::-webkit-scrollbar-corner {
+	@apply bg-transparent;
+}
+
+/* Enhanced Animations */
+@keyframes fade-in-up {
+	from {
+		opacity: 0;
+		transform: translateY(10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes fade-in-scale {
+	from {
+		opacity: 0;
+		transform: scale(0.95);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+.animate-fade-in-up {
+	animation: fade-in-up 0.3s ease-out;
+}
+
+.animate-fade-in-scale {
+	animation: fade-in-scale 0.2s ease-out;
+}
+
+/* Typography Enhancements */
+.text-gradient {
+	background: linear-gradient(to right, rgb(var(--color-accent-600)), rgb(var(--color-accent-secondary-600)), rgb(var(--color-accent-700)));
+	@apply bg-clip-text text-transparent;
+}
+
+.heading-primary {
+	@apply text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-100;
+}
+
+.heading-secondary {
+	@apply text-lg sm:text-xl font-semibold text-slate-800 dark:text-slate-200;
+}
+
+.text-muted {
+	@apply text-slate-600 dark:text-slate-400;
+}
+
+.text-subtle {
+	@apply text-slate-500 dark:text-slate-500;
+}
+
+/* Markdown Content Styling */
+.markdown-content {
+	@apply text-base leading-relaxed;
+	font-family: 'Source Sans 3', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+	line-height: 1.7;
+	letter-spacing: 0.01em;
+	color: inherit;
+}
+
+/* Markdown Headings */
+.markdown-h1 {
+	@apply text-2xl font-bold mb-4 mt-6 first:mt-0;
+	@apply text-slate-900 dark:text-slate-100;
+	@apply border-b border-slate-200 dark:border-slate-700 pb-2;
+	line-height: 1.3;
+}
+
+.markdown-h2 {
+	@apply text-xl font-bold mb-3 mt-5 first:mt-0;
+	@apply text-slate-900 dark:text-slate-100;
+	line-height: 1.3;
+}
+
+.markdown-h3 {
+	@apply text-lg font-semibold mb-3 mt-4 first:mt-0;
+	@apply text-slate-800 dark:text-slate-200;
+	line-height: 1.4;
+}
+
+.markdown-h4 {
+	@apply text-base font-semibold mb-2 mt-4 first:mt-0;
+	@apply text-slate-800 dark:text-slate-200;
+	line-height: 1.4;
+}
+
+.markdown-h5 {
+	@apply text-sm font-semibold mb-2 mt-3 first:mt-0;
+	@apply text-slate-700 dark:text-slate-300;
+	line-height: 1.4;
+}
+
+.markdown-h6 {
+	@apply text-sm font-medium mb-2 mt-3 first:mt-0;
+	@apply text-slate-600 dark:text-slate-400;
+	line-height: 1.4;
+}
+
+/* Markdown Paragraphs */
+.markdown-p {
+	@apply mb-4 last:mb-0;
+	line-height: 1.7;
+}
+
+/* Markdown Lists */
+.markdown-ul {
+	@apply mb-4 ml-6 space-y-1;
+	list-style-type: disc;
+}
+
+.markdown-ol {
+	@apply mb-4 ml-6 space-y-1;
+	list-style-type: decimal;
+}
+
+.markdown-li {
+	@apply leading-relaxed;
+	line-height: 1.6;
+}
+
+.markdown-li > .markdown-p {
+	@apply mb-2;
+}
+
+/* Markdown Links */
+.markdown-link {
+	@apply font-medium underline decoration-2 underline-offset-2 transition-colors duration-200;
+	color: rgb(var(--color-accent-600));
+	text-decoration-color: rgb(var(--color-accent-400));
+}
+
+.markdown-link:hover {
+	color: rgb(var(--color-accent-700));
+	text-decoration-color: rgb(var(--color-accent-600));
+}
+
+.dark .markdown-link {
+	color: rgb(var(--color-accent-400));
+	text-decoration-color: rgb(var(--color-accent-500));
+}
+
+.dark .markdown-link:hover {
+	color: rgb(var(--color-accent-300));
+	text-decoration-color: rgb(var(--color-accent-400));
+}
+
+/* Markdown Text Emphasis */
+.markdown-strong {
+	@apply font-semibold;
+	@apply text-slate-900 dark:text-slate-100;
+}
+
+.markdown-em {
+	@apply italic;
+	@apply text-slate-800 dark:text-slate-200;
+}
+
+/* Markdown Blockquotes */
+.markdown-blockquote {
+	@apply border-l-4 pl-4 py-2 my-4 bg-slate-50 dark:bg-slate-800/50;
+	@apply text-slate-700 dark:text-slate-300 italic;
+	border-left-color: rgb(var(--color-accent-400));
+}
+
+/* Markdown Horizontal Rules */
+.markdown-hr {
+	@apply my-6 border-0 h-px bg-slate-200 dark:bg-slate-700;
+}
+
+/* Markdown Code Blocks */
+.code-block-wrapper {
+	@apply my-4 rounded-xl overflow-hidden;
+	@apply border border-slate-200 dark:border-slate-700;
+}
+
+.code-block-header {
+	@apply flex items-center justify-between px-4 py-2;
+	@apply bg-slate-100 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700;
+}
+
+.code-language {
+	@apply text-xs font-semibold uppercase tracking-wide;
+	@apply text-slate-600 dark:text-slate-400;
+}
+
+.copy-button {
+	@apply p-1.5 rounded-md transition-all duration-200;
+	@apply text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200;
+	@apply hover:bg-slate-200 dark:hover:bg-slate-700;
+	@apply focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-slate-400;
+}
+
+/* Enhanced code block styling for highlight.js */
+.code-block-wrapper code {
+	@apply block p-4 text-sm leading-relaxed;
+	font-family: 'JetBrains Mono', 'Fira Code', 'Monaco', 'Cascadia Code', 'Roboto Mono', monospace !important;
+	border-radius: 0 0 0.75rem 0.75rem;
+	margin: 0 !important;
+	overflow-x: auto;
+}
+
+.code-block-wrapper code.hljs {
+	@apply bg-slate-50 dark:bg-slate-900;
+	@apply text-slate-900 dark:text-slate-100;
+}
+
+/* Override highlight.js background for theme consistency */
+.hljs {
+	background: transparent !important;
+}
+
+/* Inline Code */
+.inline-code {
+	@apply px-1.5 py-0.5 rounded text-sm font-mono;
+	@apply bg-slate-100 dark:bg-slate-700 text-slate-800 dark:text-slate-200;
+	@apply border border-slate-200 dark:border-slate-600;
+	font-family: 'JetBrains Mono', 'Fira Code', 'Monaco', 'Cascadia Code', 'Roboto Mono', monospace;
+}
+
+/* Markdown Tables */
+.table-wrapper {
+	@apply my-4 overflow-x-auto;
+}
+
+.markdown-table {
+	@apply w-full border-collapse;
+	@apply border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden;
+}
+
+.markdown-thead {
+	@apply bg-slate-50 dark:bg-slate-800;
+}
+
+.markdown-th {
+	@apply px-4 py-3 text-left text-sm font-semibold;
+	@apply text-slate-900 dark:text-slate-100;
+	@apply border-b border-slate-200 dark:border-slate-700;
+}
+
+.markdown-td {
+	@apply px-4 py-3 text-sm;
+	@apply border-b border-slate-200 dark:border-slate-700 last:border-b-0;
+}
+
+.markdown-tr:hover {
+	@apply bg-slate-50 dark:bg-slate-800/50;
+}
+
+/* Message-specific markdown adjustments */
+.message-user .markdown-content {
+	@apply text-white;
+}
+
+.message-user .markdown-h1,
+.message-user .markdown-h2,
+.message-user .markdown-h3,
+.message-user .markdown-h4,
+.message-user .markdown-h5,
+.message-user .markdown-h6 {
+	@apply text-white border-white/20;
+}
+
+.message-user .markdown-link {
+	@apply text-white underline decoration-white/60;
+}
+
+.message-user .markdown-link:hover {
+	@apply decoration-white;
+}
+
+.message-user .markdown-blockquote {
+	@apply bg-white/10 text-white/90 border-white/30;
+}
+
+.message-user .inline-code {
+	@apply bg-white/20 text-white border-white/30;
+}
+
+.message-user .code-block-wrapper {
+	@apply border-white/20;
+}
+
+.message-user .code-block-header {
+	@apply bg-white/10 border-white/20;
+}
+
+.message-user .code-language {
+	@apply text-white/80;
+}
+
+.message-user .copy-button {
+	@apply text-white/70 hover:text-white hover:bg-white/20;
+}
+
+/* Mobile-Specific Responsive Design */
+@media (max-width: 768px) {
+	/* Mobile Header Adjustments */
+	.header-mobile {
+		padding: 0.75rem 1rem;
+		height: 3.5rem;
+	}
+
+	.header-mobile .logo-section {
+		flex-shrink: 0;
+	}
+
+	.header-mobile .logo-text {
+		font-size: 1.125rem;
+		line-height: 1.2;
+	}
+
+	.header-mobile .navigation-buttons {
+		display: none;
+	}
+
+	.header-mobile .actions-section {
+		gap: 0.5rem;
+	}
+
+	.header-mobile .user-menu-button {
+		padding: 0.5rem;
+		min-width: unset;
+	}
+
+	.header-mobile .user-menu-text {
+		display: none;
+	}
+
+	/* Mobile Chat Interface */
+	.chat-mobile {
+		height: calc(100vh - 3.5rem);
+		height: calc(100dvh - 3.5rem);
+	}
+
+	.chat-mobile .sidebar {
+		position: fixed;
+		top: 3.5rem;
+		left: 0;
+		bottom: 0;
+		z-index: 40;
+		background: rgba(255, 255, 255, 0.95);
+		backdrop-filter: blur(10px);
+		border-right: 1px solid rgb(var(--color-border));
+	}
+
+	.dark .chat-mobile .sidebar {
+		background: rgba(15, 23, 42, 0.95);
+	}
+
+	.chat-mobile .main-content {
+		margin-left: 0;
+		width: 100%;
+	}
+
+	.chat-mobile .main-content.sidebar-open {
+		margin-left: 0;
+	}
+
+	/* Mobile Message Bubbles */
+	.message-mobile {
+		max-width: 90%;
+		padding: 0.75rem 1rem;
+		font-size: 0.9rem;
+		line-height: 1.5;
+	}
+
+	.message-mobile .chat-timestamp {
+		font-size: 0.75rem;
+		margin-top: 0.5rem;
+	}
+
+	/* Mobile Input Area */
+	.input-mobile {
+		padding: 1rem;
+		background: rgba(255, 255, 255, 0.95);
+		backdrop-filter: blur(10px);
+		border-top: 1px solid rgb(var(--color-border));
+	}
+
+	.dark .input-mobile {
+		background: rgba(15, 23, 42, 0.95);
+	}
+
+	.input-mobile textarea {
+		font-size: 16px !important;
+		min-height: 2.75rem;
+		padding: 0.75rem 2.5rem 0.75rem 1rem;
+	}
+
+	.input-mobile .send-button {
+		right: 0.5rem;
+		top: 0.625rem;
+		padding: 0.5rem;
+	}
+
+	/* Mobile Cards */
+	.card-mobile {
+		margin: 0.75rem;
+		border-radius: 1rem;
+		padding: 1rem;
+	}
+
+	/* Mobile Buttons */
+	.btn-mobile {
+		padding: 0.75rem 1rem;
+		font-size: 0.9rem;
+		min-height: 2.75rem;
+		border-radius: 0.75rem;
+	}
+
+	/* Mobile Touch Targets */
+	.touch-target {
+		min-height: 44px;
+		min-width: 44px;
+	}
+
+	/* Mobile Spacing */
+	.mobile-spacing {
+		padding: 1rem;
+	}
+
+	.mobile-spacing-sm {
+		padding: 0.75rem;
+	}
+
+	/* Mobile Typography */
+	.heading-mobile {
+		font-size: 1.25rem;
+		line-height: 1.3;
+		margin-bottom: 0.75rem;
+	}
+
+	.text-mobile {
+		font-size: 0.9rem;
+		line-height: 1.5;
+	}
+
+	/* Mobile Scrolling */
+	.scroll-mobile {
+		-webkit-overflow-scrolling: touch;
+		scroll-behavior: smooth;
+	}
+}
+
+@media (max-width: 480px) {
+	/* Extra small mobile devices */
+	html {
+		font-size: 13px;
+	}
+
+	.container-mobile {
+		padding: 0.5rem;
+	}
+
+	.message-mobile {
+		max-width: 95%;
+		padding: 0.625rem 0.875rem;
+		font-size: 0.85rem;
+	}
+
+	.input-mobile {
+		padding: 0.75rem;
+	}
+
+	.card-mobile {
+		margin: 0.5rem;
+		padding: 0.75rem;
+	}
+}
+
+/* Landscape phone orientation */
+@media (max-width: 768px) and (orientation: landscape) {
+	.chat-mobile {
+		height: calc(100vh - 3rem);
+		height: calc(100dvh - 3rem);
+	}
+
+	.header-mobile {
+		height: 3rem;
+		padding: 0.5rem 1rem;
+	}
+
+	.input-mobile {
+		padding: 0.75rem 1rem;
+	}
+}
+
+/* Touch-specific styles */
+@media (hover: none) and (pointer: coarse) {
+	/* Remove hover effects on touch devices */
+	.hover-effect:hover {
+		transform: none;
+		box-shadow: inherit;
+	}
+
+	/* Increase touch targets */
+	button, a, .clickable {
+		min-height: 44px;
+		min-width: 44px;
+	}
+
+	/* Improve button feedback */
+	button:active, .clickable:active {
+		opacity: 0.7;
+		transform: scale(0.95);
+	}
+}
+
+/* Safe area support for devices with notches */
+@supports (padding: max(0px)) {
+	body {
+		padding-left: max(0px, env(safe-area-inset-left));
+		padding-right: max(0px, env(safe-area-inset-right));
+	}
+
+	.header-mobile {
+		padding-top: max(0.75rem, env(safe-area-inset-top));
+		padding-left: max(1rem, env(safe-area-inset-left));
+		padding-right: max(1rem, env(safe-area-inset-right));
+	}
+
+	.input-mobile {
+		padding-bottom: max(1rem, env(safe-area-inset-bottom));
+		padding-left: max(1rem, env(safe-area-inset-left));
+		padding-right: max(1rem, env(safe-area-inset-right));
+	}
+}
